@@ -1,0 +1,103 @@
+custom-stack/
+├── __MACOSX/
+│   └── custom-stack/
+│       ├── src/
+│       └── test/
+└── custom-stack/
+    ├── src/
+    │   ├── __init__.py
+    │   └── custom_stack_class.py
+    ├── test/
+    │   ├── __init__.py
+    │   └── custom_stack_test.py
+    ├── README.md
+    └── requirements.txt
+
+
+
+
+
+<<FILE_START: ./custom-stack/src/__init__.py>>
+
+<<FILE_END: ./custom-stack/src/__init__.py>>
+
+<<FILE_START: ./custom-stack/src/custom_stack_class.py>>
+class StackEmptyException(Exception):
+    pass
+
+class StackFullException(Exception):
+    pass
+
+
+class CustomStack:
+
+    def __init__(self, pLimit):
+        self.limit = pLimit
+        self.elements = []
+    
+    def size(self):
+        return len(self.elements)
+
+    def is_empty(self):
+        return self.size() == 0
+
+    def push(self, element):
+        if (self.size == self.limit):
+            raise StackFullException
+        
+        self.elements.append(element)
+    
+    def pop(self):
+        if self.is_empty():
+            raise StackEmptyException
+        return self.elements.pop()
+    
+    def top(self):
+        if self.is_empty():
+            raise StackEmptyException
+        return self.elements[-1]
+<<FILE_END: ./custom-stack/src/custom_stack_class.py>>
+
+<<FILE_START: ./custom-stack/test/__init__.py>>
+
+<<FILE_END: ./custom-stack/test/__init__.py>>
+
+<<FILE_START: ./custom-stack/test/custom_stack_test.py>>
+from src.custom_stack_class import *
+
+def test_push_one_elementinstack():
+    element_value = 5.0
+    value = 0.0
+
+    cut = CustomStack(5)
+    cut.push(element_value)
+    assert cut.is_empty() == False
+    assert element_value == cut.top()
+    assert 1 == cut.size()
+<<FILE_END: ./custom-stack/test/custom_stack_test.py>>
+
+<<FILE_START: ./custom-stack/README.md>>
+# Installing Dependencies
+```sh
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+
+# Test Execution
+```sh
+python -m pytest ./test/* --cov
+```
+<<FILE_END: ./custom-stack/README.md>>
+
+<<FILE_START: ./custom-stack/requirements.txt>>
+coverage==7.5.0
+iniconfig==2.0.0
+packaging==24.0
+pluggy==1.5.0
+pytest==8.1.1
+pytest-cov==5.0.0
+pytest-mock==3.14.0
+
+<<FILE_END: ./custom-stack/requirements.txt>>
